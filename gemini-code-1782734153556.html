@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuyên Đề Cấu Trúc Từ Loại Word Form (Học Phần 2) - Ms Lê Hằng English</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #8854C0;
+            --accent-color: #FDCB6E;
+            --teal-color: #00C9A7;
+            --correct-color: #00D26A;
+            --wrong-color: #FF4757;
+            --text-color: #2D3436;
+            --card-bg: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+            margin: 0; padding: 0;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #8854C0, #FDCB6E, #00C9A7, #FF7675);
+            background-size: 400% 400%;
+            animation: gradientAnim 12s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; opacity: 0.13; pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='%23ffffff'%3E%3Cpath d='M20 20 L30 20 L30 30 L20 30 Z M70 20 A 8 8 0 1 1 70 36 A 8 8 0 1 1 70 20 M50 70 L55 80 L65 80 L57 86 L60 96 L50 90 L40 96 L43 86 L35 80 L45 80 Z' /%3E%3C/g%3E%3C/svg%3E");
+            animation: patternFloat 25s linear infinite;
+        }
+
+        @keyframes gradientAnim {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes patternFloat {
+            0% { background-position: 0 0; }
+            100% { background-position: 500px 1000px; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 780px;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        header h5 {
+            font-size: 1.05rem;
+            color: #FFFFFF;
+            background: rgba(0, 0, 0, 0.15);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            font-weight: 700;
+        }
+
+        .warning-box {
+            background: #FFEAA7;
+            border: 4px solid #FDCB6E;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 0 #E17055;
+            color: #2D3436;
+            text-align: center;
+        }
+
+        .warning-box h4 {
+            font-size: 1.25rem;
+            color: #D63031;
+            margin-bottom: 8px;
+            font-weight: 900;
+        }
+
+        .warning-box p {
+            font-size: 0.98rem;
+            line-height: 1.5;
+            font-weight: 700;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 22px;
+            padding: 24px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 0 rgba(0,0,0,0.1);
+            border: 3px solid #E0E0E0;
+        }
+
+        .card-meta-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #A0A0A0;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 18px;
+            background: #F8F9FA;
+            padding: 14px;
+            border-radius: 12px;
+            border-left: 5px solid #6C5CE7;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: #FFFFFF;
+            border: 3px solid #E0E0E0;
+            border-radius: 18px;
+            padding: 14px 20px;
+            font-size: 1.02rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-align: left;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #E0E0E0;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            width: 100%;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            transform: scale(1.01) translateY(-2px);
+            box-shadow: 0 8px 0 #D0D0D0;
+            background: #FAEDFF;
+        }
+
+        .option-btn.correct {
+            background: var(--correct-color) !important;
+            border-color: #00B359 !important;
+            color: white !important;
+            box-shadow: 0 6px 0 #008040 !important;
+        }
+
+        .option-btn.wrong {
+            background: var(--wrong-color) !important;
+            border-color: #E03847 !important;
+            color: white !important;
+            box-shadow: 0 6px 0 #B32431 !important;
+        }
+
+        .option-btn.disabled {
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        @keyframes shakeAction {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        .shake-animation { animation: shakeAction 0.4s ease-in-out; }
+
+        .explanation-box {
+            margin-top: 20px;
+            background: #F3EAFE;
+            border-left: 6px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 15px 18px;
+            display: none;
+            animation: slideDown 0.4s ease forwards;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .explanation-title {
+            color: var(--primary-color);
+            font-weight: 900;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+
+        .explanation-content {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+
+        .submit-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .submit-all-btn {
+            background: #6C5CE7; color: white; border: none;
+            padding: 16px 45px; font-size: 1.3rem; font-weight: 900;
+            border-radius: 22px; cursor: pointer; box-shadow: 0 6px 0 #4834D4;
+        }
+
+        #confetti-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 999;
+        }
+
+        .modal-mask {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); display: flex;
+            justify-content: center; align-items: center; z-index: 1000;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .modal-mask.active { opacity: 1; pointer-events: auto; }
+        .modal-container {
+            background: white; border-radius: 25px; padding: 35px;
+            max-width: 520px; width: 90%; text-align: center;
+            border: 4px solid var(--accent-color);
+        }
+        .modal-score { font-size: 3rem; font-weight: 900; color: var(--primary-color); margin: 15px 0; }
+        .modal-feedback { font-size: 1.05rem; color: var(--text-color); font-weight: 700; line-height: 1.6; margin-bottom: 25px; }
+        .modal-btn {
+            background: var(--teal-color); color: white; border: none; padding: 12px 30px;
+            font-size: 1.05rem; font-weight: 700; border-radius: 14px; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="container">
+        <header>
+            <h5>Giáo viên tạo: Ms Lê Hằng English</h5>
+        </header>
+
+        <div class="warning-box">
+            <h4>⚠️ HỌC PHẦN 2: CÂU 51 ĐẾN 100 ⚠️</h4>
+            <p>Hệ thống trắc nghiệm thông minh tự xáo bài để kích thích tư duy. Hãy nghiền ngẫm thật kỹ bảng phân tích Word Family sau mỗi lượt chọn nhé!</p>
+        </div>
+
+        <div id="quiz-injector-node"></div>
+
+        <div class="submit-section">
+            <button class="submit-all-btn" onclick="processQuizEvaluation()">NỘP BÀI CHẤM ĐIỂM 🎉</button>
+        </div>
+    </div>
+
+    <div class="modal-mask" id="score-modal">
+        <div class="modal-container">
+            <h2>🏆 KẾT QUẢ BÀI KIỂM TRA 🏆</h2>
+            <div class="modal-score" id="score-text">0 / 50</div>
+            <div class="modal-feedback" id="feedback-text">Lời khuyên tuyển sinh từ cô giáo...</div>
+            <button class="modal-btn" onclick="reloadQuizLayout()">Làm Lại Từ Đầu 🔄</button>
+        </div>
+    </div>
+
+    <script>
+        const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+        let audioContextInstance = null;
+
+        function triggerSoundFeedback(status) {
+            try {
+                if (!audioContextInstance) audioContextInstance = new AudioCtxClass();
+                const osc = audioContextInstance.createOscillator();
+                const gain = audioContextInstance.createGain();
+                osc.connect(gain); gain.connect(audioContextInstance.destination);
+
+                if (status === 'correct') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, audioContextInstance.currentTime);
+                    osc.frequency.setValueAtTime(783.99, audioContextInstance.currentTime + 0.1);
+                    gain.gain.setValueAtTime(0.15, audioContextInstance.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioContextInstance.currentTime + 0.3);
+                    osc.start(); osc.stop(audioContextInstance.currentTime + 0.3);
+                } else {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(196, audioContextInstance.currentTime);
+                    osc.frequency.setValueAtTime(130, audioContextInstance.currentTime + 0.15);
+                    gain.gain.setValueAtTime(0.2, audioContextInstance.currentTime);
+                    osc.start(); osc.stop(audioContextInstance.currentTime + 0.35);
+                }
+            } catch (e) {}
+        }
+
+        // KHO DỮ LIỆU ĐẦY ĐỦ 50 CÂU (51 - 100) CHUẨN XÁC VÀ CHI TIẾT
+        const dataset = [
+            { id: 51, text: "We must remember to eat (SENSE).", options: ["sensibly", "sensible", "sense", "sensitive"], correct: "sensibly", exp: "Đứng sau động từ hành động 'eat' cần trạng từ bổ nghĩa cách thức. Eat sensibly: Ăn uống hợp lý, điều độ.<br>• Gia đình từ: sense (n/v), sensible (adj), sensitive (adj), sensibly (adv)." },
+            { id: 52, text: "He didn’t win the championship, so he felt very (HOPE).", options: ["hopeless", "hopeful", "hope", "hopefully"], correct: "hopeless", exp: "Sau động từ nối cảm xúc 'felt very' cần một tính từ. Ngữ cảnh thua cuộc mang tính tiêu cực nên dùng từ phủ định. Hopeless (adj): Tuyệt vọng, vô vọng.<br>• Gia đình từ: hope (n/v), hopeful (adj), hopeless (adj)." },
+            { id: 53, text: "I'd like a nice (JUICE) orange.", options: ["juicy", "juice", "juiced", "juiciness"], correct: "juicy", exp: "Đứng trước bổ nghĩa tính chất cho danh từ quả cam 'orange' cần tính từ. Juicy (adj): Mọng nước.<br>• Gia đình từ: juice (n), juicy (adj), juiciness (n)." },
+            { id: 54, text: "We are very proud of our (FRIEND).", options: ["friendship", "friendly", "friendliness", "friend"], correct: "friendship", exp: "Đứng sau tính từ sở hữu 'our' cần một danh từ trừu tượng chỉ mối quan hệ. Friendship (n): Tình bạn.<br>• Gia đình từ: friend (n), friendship (n), friendly (adj), friendliness (n)." },
+            { id: 55, text: "Her aunt wants to know Lan’s (HIGH).", options: ["height", "high", "highly", "heighten"], correct: "height", exp: "Đứng sau sở hữu cách 'Lan's' cần danh từ chỉ thông số cơ thể. Height (n): Chiều cao.<br>• Gia đình từ: high (adj), height (n), heighten (v), highly (adv)." },
+            { id: 56, text: "You mustn’t drive (CARE) on busy streets.", options: ["carelessly", "carefully", "careless", "careful"], correct: "carelessly", exp: "Bổ nghĩa cho động từ hành động 'drive'. Trên đường đông đúc không được lái xe bất cẩn (carelessly).<br>• Gia đình từ: care (n/v), careful (adj), careless (adj), carefully (adv), carelessly (adv)." },
+            { id: 57, text: "What an (AMAZE) actor! He makes the movie wonderful.", options: ["amazing", "amazed", "amazement", "amaze"], correct: "amazing", exp: "Cấu trúc câu cảm thán What an + Adj + N! Diễn viên chủ động tạo ra sự kinh ngạc nên dùng đuôi -ing.<br>• Gia đình từ: amaze (v), amazement (n), amazing (adj), amazed (adj)." },
+            { id: 58, text: "We are all (EXCITE) about going on an excursion to Cuc Phuong forest next weekend.", options: ["excited", "exciting", "excitement", "excite"], correct: "excited", exp: "Cấu trúc trạng thái cảm xúc của người: be excited about something (hào hứng về cái gì). Chủ ngữ 'We' dùng tính từ đuôi -ed.<br>• Gia đình từ: excite (v), excitement (n), exciting (adj), excited (adj)." },
+            { id: 59, text: "The room will look brighter if there is a (PAINT) on the wall.", options: ["painting", "painter", "paint", "painted"], correct: "painting", exp: "Sau mạo từ 'a' cần danh từ số ít chỉ vật thể trang trí trên tường. Painting (n): Bức tranh.<br>• Gia đình từ: paint (v/n), painter (n), painting (n)." },
+            { id: 60, text: "Some of the children (MAIN) boys, play marbles when there is a break.", options: ["mainly", "main", "mainland", "maintain"], correct: "mainly", exp: "Cần trạng từ đứng trong mệnh đề xen kẽ để khuynh hướng hóa đối tượng đại đa số. Mainly (adv): Chủ yếu, phần lớn.<br>• Gia đình từ: main (adj), mainly (adv)." },
+            { id: 61, text: "You shouldn’t eat (HEALTH) food.", options: ["unhealthy", "healthy", "health", "healthily"], correct: "unhealthy", exp: "Đứng trước danh từ food cần tính từ. Lời khuyên răn không nên ăn (shouldn't eat) chỉ ra loại đồ ăn độc hại. Unhealthy (adj): Không tốt cho sức khỏe.<br>• Gia đình từ: health (n), healthy (adj), unhealthy (adj)." },
+            { id: 62, text: "We mustn’t be (CARE) when we cross busy streets.", options: ["careless", "careful", "carelessly", "carefulness"], correct: "careless", exp: "Sau hệ động từ tobe 'mustn't be' cần tính từ mang nghĩa tiêu cực. Careless (adj): Bất cẩn, cẩu thả.<br>• Gia đình từ: tham chiếu câu số 56." },
+            { id: 63, text: "She often feels (HAPPY) when she gets bad marks.", options: ["unhappy", "happy", "happiness", "happily"], correct: "unhappy", exp: "Sau linking verb 'feels' cần tính từ. Bị điểm kém (bad marks) đem lại tâm trạng buồn bã phủ định. Unhappy (adj): Buồn, không vui.<br>• Gia đình từ: happy (adj), unhappy (adj), happiness (n), unhappiness (n)." },
+            { id: 64, text: "We shouldn’t eat too much (FAT) food and sugar.", options: ["fatty", "fat", "fatten", "fatness"], correct: "fatty", exp: "Tính từ đứng trước bổ nghĩa danh từ food. Fatty food (n): Thức ăn chứa nhiều mỡ, nhiều chất béo.<br>• Gia đình từ: fat (n/adj), fatty (adj), fatten (v)." },
+            { id: 65, text: "Linda is the most (BEAUTY) of the three girls.", options: ["beautiful", "beautifully", "beautify", "beauty"], correct: "beautiful", exp: "Cấu trúc so sánh nhất với tính từ dài: the most + Adj. Beautiful (adj): Xinh đẹp.<br>• Gia đình từ: beauty (n), beautify (v), beautiful (adj), beautifully (adv)." },
+            { id: 66, text: "How many times a day do you brush your (TOOTH)?", options: ["teeth", "tooth", "tooths", "toothing"], correct: "teeth", exp: "Đứng sau từ sở hữu 'your' và hành động chải răng. Do chải cả hàm răng nên phải dùng danh từ số nhiều bất quy tắc. Teeth (n): Các chiếc răng.<br>• Gia đình từ: tooth (số ít) -> teeth (số nhiều), toothbrush (n)." },
+            { id: 67, text: "Did they make a (DECIDE) not to go to Italy for their vacation?", options: ["decision", "decide", "decisive", "decisively"], correct: "decision", exp: "Kết hợp với động từ 'make' đứng trước tạo cụm cố định: make a decision (đưa ra quyết định).<br>• Gia đình từ: decide (v), decision (n), decisive (adj)." },
+            { id: 68, text: "My stomachache (APPEAR) after I took the tablet.", options: ["disappeared", "appeared", "disappear", "appearance"], correct: "disappeared", exp: "Cần động từ chính chia thì Quá khứ đơn đồng bộ với vế sau (took). Sau khi uống thuốc thì cơn đau dạ dày biến mất. Disappeared (v).<br>• Gia đình từ: appear (v) $\leftrightarrow$ disappear (v), appearance (n) $\leftrightarrow$ disappearance (n)." },
+            { id: 69, text: "You should wash the fruits (CARE) before eating them.", options: ["carefully", "careless", "careful", "carelessly"], correct: "carefully", exp: "Trạng từ đứng cuối câu bổ nghĩa cho hành động rửa hoa quả 'wash'. Rửa một cách cẩn thận: carefully (adv).<br>• Gia đình từ: tham chiếu câu số 56." },
+            { id: 70, text: "Having a (RUN) nose is a symptom of a cold.", options: ["runny", "running", "run", "runner"], correct: "runny", exp: "Cụm danh từ y học chỉ trạng thái sổ mũi lâm sàng: a runny nose. Cần điền tính từ runny.<br>• Gia đình từ: run (v), runner (n), runny (adj)." },
+            { id: 71, text: "Liz’s (VISIT) to Cham Temple was wonderful.", options: ["visit", "visitor", "visiting", "visitation"], correct: "visit", exp: "Đứng sau sở hữu cách 'Liz's' làm chủ ngữ chính của câu. Từ 'visit' đóng vai trò là một danh từ cuộc tham quan.<br>• Gia đình từ: visit (v/n), visitor (n)." },
+            { id: 72, text: "Finally, he decided (SEAT) down.", options: ["to sit", "sitting", "seat", "seating"], correct: "to sit", exp: "Cấu trúc hành động quyết định: decide + to-V. Đi với trạng từ down tạo cụm động từ ngồi xuống: to sit down.<br>• Gia đình từ: seat (n), sit (v)." },
+            { id: 73, text: "Hoa is the (HELP) student in the class.", options: ["helpful", "helpless", "help", "helpfully"], correct: "helpful", exp: "Tính từ đứng trước danh từ student trong cấu trúc so sánh tinh giản. Helpful (adj): Hay giúp đỡ người khác.<br>• Gia đình từ: help (v/n), helpful (adj), helpless (adj), helpfully (adv)." },
+            { id: 74, text: "Hanoi people are (FRIEND).", options: ["friendly", "friendship", "friend", "friendliness"], correct: "friendly", exp: "Đứng sau động từ tobe 'are' đóng vai trò làm tính từ mô tả tính cách con người Hà Nội. Friendly (adj): Thân thiện.<br>• Gia đình từ: tham chiếu câu số 54." },
+            { id: 75, text: "Today the weather is fine and (SUN).", options: ["sunny", "sun", "sunlight", "sunless"], correct: "sunny", exp: "Đứng sau tobe và nối bằng chữ 'and' với tính từ 'fine' $\rightarrow$ cần tính từ thời tiết đồng bộ. Sunny (adj): Có nắng.<br>• Gia đình từ: sun (n), sunny (adj), sunlight (n)." },
+            { id: 76, text: "This is the biggest (BUILD) in the city.", options: ["building", "builder", "build", "built"], correct: "building", exp: "Đứng sau tính từ so sánh nhất 'the biggest' cần danh từ chỉ vật thể. Building (n): Tòa nhà khổng lồ.<br>• Gia đình từ: build (v), builder (n), building (n)." },
+            { id: 77, text: "Bill Gates is a famous (BUSY).", options: ["businessman", "business", "busy", "busily"], correct: "businessman", exp: "Đứng sau cụm mạo từ + tính từ 'a famous' cần danh từ số ít chỉ người đàn ông làm kinh doanh. Businessman (n).<br>• Gia đình từ: business (n), businessman (n), busy (adj)." },
+            { id: 78, text: "Hoa has a fine (COLLECT) of stamp.", options: ["collection", "collector", "collect", "collective"], correct: "collection", exp: "Cấu trúc chỉ một bộ sưu tập hiện vật đếm được: a fine collection of stamps. Điền danh từ collection.<br>• Gia đình từ: collect (v), collection (n), collector (n)." },
+            { id: 79, text: "Minh looks (WORRY) again. What’s the matter with him?", options: ["worried", "worrying", "worry", "worriedly"], correct: "worried", exp: "Sau động từ liên kết trạng thái 'looks' cần tính từ thể hiện cảm xúc lo âu của con người $\rightarrow$ dùng đuôi -ed: worried (adj).<br>• Gia đình từ: worry (v/n), worried (adj), worrying (adj), worriedly (adv)." },
+            { id: 80, text: "He lives in (MOUNTAIN) area with his parents.", options: ["mountainous", "mountain", "mountaineer", "mountains"], correct: "mountainous", exp: "Tính từ đứng trước bổ nghĩa cho danh từ địa bàn khu vực 'area'. Mountainous area (n): Vùng núi, miền núi.<br>• Gia đình từ: mountain (n), mountainous (adj), mountaineer (n)." },
+            { id: 81, text: "You should be (CARE) when driving.", options: ["careful", "careless", "carefully", "carelessness"], correct: "careful", exp: "Sau động từ khuyết thiếu kết hợp tobe 'should be' cần tính từ khuyên răn tích cực. Careful (adj): Cẩn thận.<br>• Gia đình từ: tham chiếu câu số 56." },
+            { id: 82, text: "Hoa is having a (MEDICINE) check-up.", options: ["medical", "medicine", "medically", "medicated"], correct: "medical", exp: "Tính từ đứng trước bổ nghĩa danh từ kiểm tra sức khỏe 'check-up'. Medical check-up (n): Khám sức khỏe y tế.<br>• Gia đình từ: medicine (n), medical (adj), medically (adv)." },
+            { id: 83, text: "The nurse wanted to know Nga’s height and (WEIGH).", options: ["weight", "weigh", "weighty", "weighing"], correct: "weight", exp: "Cấu trúc danh từ song hành nối bằng từ 'and' sau sở hữu cách: height (chiều cao) và weight (cân nặng, danh từ).<br>• Gia đình từ: weigh (v), weight (n), weighty (adj)." },
+            { id: 84, text: "Edison’s most famous (INVENT) was the electronic bulb.", options: ["invention", "inventor", "invent", "inventive"], correct: "invention", exp: "Đứng sau cụm từ sở hữu cách + so sánh nhất cần danh từ chỉ thành tựu vật thể sản phẩm. Invention (n): Phát minh.<br>• Gia đình từ: invent (v), invention (n), inventor (n), inventive (adj)." },
+            { id: 85, text: "This dictionary is very (USE) for you to learn English.", options: ["useful", "useless", "use", "user"], correct: "useful", exp: "Cấu trúc bổ ích cho ai đó: be + very + useful + for someone. Useful (adj): Hữu ích, có ích.<br>• Gia đình từ: use (v/n), useful (adj), useless (adj), user (n)." },
+            { id: 86, text: "I have (LITTLE) time to play than my friends.", options: ["less", "least", "little", "lesser"], correct: "less", exp: "Có từ so sánh 'than' đứng sau danh từ không đếm được 'time' $\rightarrow$ dạng so sánh hơn bất quy tắc của little đổi thành less.<br>• Gia đình từ: little -> less -> least." },
+            { id: 87, text: "I’m not used to (DRIVE) on the left.", options: ["driving", "drive", "driven", "driver"], correct: "driving", exp: "Cấu trúc thích nghi thói quen ở hiện tại: be + used to + V-ing. Do đó động từ drive đổi thành danh động từ driving.<br>• Gia đình từ: drive (v), driver (n), driving (n)." },
+            { id: 88, text: "He was punished for his (LAZY).", options: ["laziness", "lazy", "lazily", "lazinesses"], correct: "laziness", exp: "Đứng sau tính từ sở hữu 'his' và giới từ chỉ lý do 'for' cần một danh từ trừu tượng. Laziness (n): Sự lười biếng.<br>• Gia đình từ: lazy (adj), laziness (n), lazily (adv)." },
+            { id: 89, text: "We had a very (ENJOY) evening in London last month.", options: ["enjoyable", "enjoy", "enjoyment", "enjoyably"], correct: "enjoyable", exp: "Tính từ bổ nghĩa tính chất đứng trước danh từ buổi tối 'evening'. Enjoyable (adj): Thú vị, đáng tận hưởng.<br>• Gia đình từ: enjoy (v), enjoyment (n), enjoyable (adj)." },
+            { id: 90, text: "I believe you because I know you are (TRUTH).", options: ["truthful", "truth", "truly", "truthfully"], correct: "truthful", exp: "Đứng sau động từ tobe 'are' mô tả nét tính cách thật thà, chân thực của con người $\rightarrow$ điền tính từ truthful.<br>• Gia đình từ: truth (n), truthful (adj), truly (adv), truthfully (adv)." },
+            { id: 91, text: "Nam is very (INTEREST) in computer.", options: ["interested", "interesting", "interest", "interestingly"], correct: "interested", exp: "Công thức đam mê yêu thích cố định: be interested in something. Chủ ngữ 'Nam' là người tiếp nhận cảm xúc đam mê $\rightarrow$ đuôi -ed.<br>• Gia đình từ: interest (v/n), interested (adj), interesting (adj)." },
+            { id: 92, text: "He drives so (CARE) that he is sure to have an accident.", options: ["carelessly", "carefully", "careless", "careful"], correct: "carelessly", exp: "Cấu trúc drive + so + Adv + that. Ngữ cảnh cảnh báo chắc chắn gặp tai nạn chỉ ra việc lái xe vô cùng cẩu thả $\rightarrow$ carelessly (adv).<br>• Gia đình từ: tham chiếu câu số 56." },
+            { id: 93, text: "Every week, there are two (FLY) from Ha Noi to Nha Trang.", options: ["flights", "flight", "fly", "flying"], correct: "flights", exp: "Đứng sau số đếm 'two' cần danh từ đếm được ở dạng số nhiều. Flight (chuyến bay) $\rightarrow$ số nhiều thêm s: flights.<br>• Gia đình từ: fly (v), flight (n) -> flights (n_pl)." },
+            { id: 94, text: "The earth is getting warmer and (WARM).", options: ["warmer", "warm", "warmth", "warmly"], correct: "warmer", exp: "Cấu trúc so sánh lũy tiến kép của tính từ ngắn đi với động từ biến đổi get: get warmer and warmer (ngày càng ấm/nóng lên).<br>• Gia đình từ: warm (adj/v), warmth (n), warmer (adj_comp)." },
+            { id: 95, text: "Clair is very (SOCIETY), she knows a lot of people.", options: ["sociable", "social", "society", "socialize"], correct: "sociable", exp: "Tính từ chỉ phẩm chất con người hướng ngoại, thích kết giao giao lưu rộng dựa vào vế giải thích 'biết rất nhiều người'. Sociable (adj).<br>• Gia đình từ: society (n), social (adj), sociable (adj), socialize (v)." },
+            { id: 96, text: "She spent her (CHILD) in the country.", options: ["childhood", "child", "children", "childish"], correct: "childhood", exp: "Sau tính từ sở hữu 'her' đóng vai trò tân ngữ chỉ thời gian cuộc đời đã qua. Childhood (n): Thời thơ ấu, tuổi thơ.<br>• Gia đình từ: child (n), children (n_pl), childhood (n), childish (adj)." },
+            { id: 97, text: "I am an (ENERGY) person. I play a lot of sports and run every day.", options: ["energetic", "energy", "energetically", "energize"], correct: "energetic", exp: "Tính từ đứng trước bổ nghĩa cho danh từ person mô tả một người năng nổ, giàu năng lượng. Energetic (adj).<br>• Gia đình từ: energy (n), energetic (adj), energetically (adv), energize (v)." },
+            { id: 98, text: "The president will make a (SPEAK) tonight.", options: ["speech", "speaker", "speaking", "spoken"], correct: "speech", exp: "Cụm hành động phát biểu trước công chúng của nguyên thủ: make a speech (đọc bài diễn văn). Cần điền danh từ speech.<br>• Gia đình từ: speak (v), speech (n), speaker (n)." },
+            { id: 99, text: "I understand (CLEAR) what you are saying.", options: ["clearly", "clear", "clarity", "clearance"], correct: "clearly", exp: "Đứng sau động từ hành động nhận thức 'understand' cần trạng từ cách thức bổ nghĩa thấu đáo. Clearly (adv): Một cách rõ ràng.<br>• Gia đình từ: clear (adj/v), clearly (adv), clarity (n)." },
+            { id: 100, text: "Artists are (CREATE) people.", options: ["creative", "creativity", "creation", "create"], correct: "creative", exp: "Tính từ đứng trước bổ nghĩa cho danh từ số nhiều gộp nhóm 'people' chỉ đặc trưng của giới nghệ sĩ. Creative (adj): Sáng tạo.<br>• Gia đình từ: create (v), creation (n), creativity (n), creative (adj)." }
+        ];
+
+        let studentAnswersTrack = {};
+
+        function mixOptionsRandomly(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function buildQuizLayout() {
+            const rootNode = document.getElementById('quiz-injector-node');
+            rootNode.innerHTML = "";
+
+            dataset.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `q-card-block-${item.id}`;
+
+                let randomizedOptions = [...item.options];
+                mixOptionsRandomly(randomizedOptions);
+
+                let buttonsListMarkup = `<div class="options-list">`;
+                randomizedOptions.forEach((textOption, optIdx) => {
+                    const alphabetPrefix = ["A", "B", "C", "D"];
+                    const statusCheck = (textOption === item.correct);
+                    buttonsListMarkup += `
+                        <button class="option-btn" data-correct="${statusCheck}" onclick="validateUserClick(this, ${item.id})">
+                            <strong>${alphabetPrefix[optIdx]}.</strong> ${textOption}
+                        </button>
+                    `;
+                });
+                buttonsListMarkup += `</div>`;
+
+                card.innerHTML = `
+                    <div class="card-meta-title">Câu kiểm tra Word Form số ${index + 51} / 100</div>
+                    <div class="question-text">${item.text}</div>
+                    ${buttonsListMarkup}
+                    <div class="explanation-box" id="explain-box-id-${item.id}">
+                        <div class="explanation-title">💡 PHÂN TÍCH NGỮ PHÁP & WORD FAMILY:</div>
+                        <div class="explanation-content">${item.exp}</div>
+                    </div>
+                `;
+                rootNode.appendChild(card);
+            });
+        }
+
+        function validateUserClick(buttonElement, questionId) {
+            if (studentAnswersTrack[questionId] !== undefined) return;
+
+            const isCorrect = buttonElement.getAttribute('data-correct') === 'true';
+            studentAnswersTrack[questionId] = isCorrect;
+
+            const currentCardNode = document.getElementById(`q-card-block-${questionId}`);
+            const siblingButtons = currentCardNode.querySelectorAll('.option-btn');
+
+            if (isCorrect) {
+                buttonElement.classList.add('correct');
+                triggerSoundFeedback('correct');
+                launchConfettiEffect();
+            } else {
+                buttonElement.classList.add('wrong');
+                currentCardNode.classList.add('shake-animation');
+                triggerSoundFeedback('wrong');
+
+                siblingButtons.forEach(btn => {
+                    if (btn.getAttribute('data-correct') === 'true') {
+                        btn.classList.add('correct');
+                    }
+                });
+
+                setTimeout(() => {
+                    currentCardNode.classList.remove('shake-animation');
+                }, 450);
+            }
+
+            siblingButtons.forEach(btn => btn.classList.add('disabled'));
+            document.getElementById(`explain-box-id-${questionId}`).style.display = "block";
+        }
+
+        const canvasElement = document.getElementById('confetti-canvas');
+        const ctxNode = canvasElement.getContext('2d');
+        let confettiCollection = [];
+
+        function dynamicCanvasResize() {
+            canvasElement.width = window.innerWidth;
+            canvasElement.height = window.innerHeight;
+        }
+        window.addEventListener('resize', dynamicCanvasResize);
+        dynamicCanvasResize();
+
+        function launchConfettiEffect() {
+            const colors = ['#FF4757', '#00D26A', '#8854C0', '#FDCB6E', '#00C9A7', '#FFFFFF'];
+            for (let i = 0; i < 35; i++) {
+                confettiCollection.push({
+                    x: Math.random() * canvasElement.width,
+                    y: Math.random() * canvasElement.height - canvasElement.height,
+                    size: Math.random() * 6 + 6,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speedX: Math.random() * 4 - 2,
+                    speedY: Math.random() * 4 + 4,
+                    rotation: Math.random() * 360,
+                    rotationSpeed: Math.random() * 4 - 2
+                });
+            }
+        }
+
+        function animationLoop() {
+            ctxNode.clearRect(0, 0, canvasElement.width, canvasElement.height);
+            confettiCollection.forEach((p, index) => {
+                p.x += p.speedX; p.y += p.speedY; p.rotation += p.rotationSpeed;
+                ctxNode.save();
+                ctxNode.translate(p.x, p.y);
+                ctxNode.rotate((p.rotation * Math.PI) / 180);
+                ctxNode.fillStyle = p.color;
+                ctxNode.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                ctxNode.restore();
+                if (p.y > canvasElement.height) {
+                    confettiCollection.splice(index, 1);
+                }
+            });
+            requestAnimationFrame(animationLoop);
+        }
+        requestAnimationFrame(animationLoop);
+
+        function processQuizEvaluation() {
+            let totalQuestions = dataset.length;
+            let correctCount = 0;
+
+            dataset.forEach(q => {
+                if (studentAnswersTrack[q.id] === true) {
+                    correctCount++;
+                }
+            });
+
+            let percentageResult = (correctCount / totalQuestions) * 100;
+            let finalTeacherComment = "";
+
+            if (percentageResult < 50) {
+                finalTeacherComment = "Học phần nâng cao có nhiều từ phái sinh khó. Con hãy xem lại kỹ các từ loại gốc danh từ để tối ưu điểm số nhé!";
+            } else if (percentageResult >= 50 && percentageResult <= 80) {
+                finalTeacherComment = "Kết quả rất khả quan! Con đã nắm chắc cách dùng trạng từ bổ nghĩa và tính từ đuôi -ing/-ed phân loại.";
+            } else {
+                finalTeacherComment = "Tuyệt vời! Con đã hoàn thành xuất sắc học phần Word Form nâng cao chuẩn đề chuyên lớp 10.";
+            }
+
+            document.getElementById('score-text').innerText = `${correctCount} / ${totalQuestions}`;
+            document.getElementById('feedback-text').innerText = finalTeacherComment;
+            document.getElementById('score-modal').classList.add('active');
+
+            if (percentageResult >= 75) {
+                for (let k = 0; k < 5; k++) {
+                    setTimeout(launchConfettiEffect, k * 250);
+                }
+            }
+        }
+
+        function reloadQuizLayout() {
+            studentAnswersTrack = {};
+            confettiCollection = [];
+            document.getElementById('score-modal').classList.remove('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(buildQuizLayout, 400);
+        }
+
+        window.onload = function() {
+            buildQuizLayout();
+        };
+    </script>
+</body>
+</html>
